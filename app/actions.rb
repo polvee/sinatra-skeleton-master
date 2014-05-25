@@ -11,3 +11,22 @@ end
 get '/messages/new' do
   erb :'messages/new'
 end
+
+get '/messages/:id' do
+   @message = Message.find params[:id]
+   erb :'messages/show'
+ end
+
+post '/messages' do
+  binding.pry
+  @message = Message.new(
+    subject: params[:subject],
+    content: params[:content],
+    author:  params[:author]
+  )
+    if @message.save
+     redirect '/messages'
+   else
+     erb :'messages/new'
+   end
+end
